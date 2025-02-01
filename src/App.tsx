@@ -16,8 +16,10 @@ function Info() {
 }
 
 function AppRouter() {
+
   const items = ["Option 1", "Option 2", "Option 3", "c"]; // Example dropdown items.
   const [dateOfBirth, setDateOfBirth] = useState(null); //state init. DoB
+
   return (
     <Router>
       <div style={{ padding: "20px" }}>
@@ -34,43 +36,47 @@ function AppRouter() {
           style={{ marginBottom: "10px" }}
         />
         <br />
+        
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-  <Dropdown dropdownItem={items} style={{ flex: 1 }} />
-  <LocalizationProvider dateAdapter={AdapterDateFns}>
-    <DatePicker
-      label="Date of Birth"
-      value={dateOfBirth}
-      onChange={(newValue) => setDateOfBirth(newValue)}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="outlined"
-          style={{ flex: 1 }}
-        />
-      )}
-    />
-  </LocalizationProvider>
-</div>
+          <Dropdown dropdownItem={items} style={{ flex: 1 }} />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DatePicker
+              label="Date of Birth"
+              value={dateOfBirth}
+              onChange={(newValue) => setDateOfBirth(newValue)}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  style={{ flex: 1 }}
+                />
+              )}
+            />
+          </LocalizationProvider>
+        </div>
+
         <div style={{ marginBottom: "10px" }}>
-  <TextField
-    id="address-line-1"
-    label="Address Line 1"
-    variant="outlined"
-    fullWidth
-    style={{ marginBottom: "10px" }}
-  />
-  <TextField
-    id="address-line-2"
-    label="Address Line 2"
-    variant="outlined"
-    fullWidth
-  />
-</div>
+          <TextField
+            id="address-line-1"
+            label="Address Line 1"
+            variant="outlined"
+            fullWidth
+            style={{ marginBottom: "10px" }}
+          />
+          <TextField
+            id="address-line-2"
+            label="Address Line 2"
+            variant="outlined"
+            fullWidth
+          />
+        </div>
+
         <a href="/customer-info">
-        <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
-          Submit
-        </Button>
+          <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
+            Submit
+          </Button>
         </a>
+        
         <nav style={{ marginTop: "20px" }}>
           <Link to="/customer-form" style={{ marginRight: "10px" }}>
             Go to Form
