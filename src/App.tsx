@@ -94,3 +94,8 @@ function AppRouter() {
 }
 
 export default AppRouter;
+
+// todo
+//  refactor form submission
+// replace href with useNavigate() or <Link to>
+// Add form Validation (blanks, etc)
