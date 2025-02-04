@@ -11,13 +11,12 @@ function Form() {
 }
 
 function Info() {
-  const { id } = useParams(); // useParams hook to get the route parameter
-  return <h2>This is a page for a product with ID: {id}</h2>;
+  // const { id } = useParams(); // useParams hook to get the route parameter
+  return <h2>This page is for displaying customer information. Stay tuned</h2>;
 }
 
 function AppRouter() {
 
-  const items = ["Option 1", "Option 2", "Option 3", "c"]; // Example dropdown items.
   const [dateOfBirth, setDateOfBirth] = useState(null); //state init. DoB
 
   return (
@@ -38,7 +37,7 @@ function AppRouter() {
         <br />
         
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
-          <Dropdown dropdownItem={items} style={{ flex: 1 }} />
+          <Dropdown/>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Date of Birth"
@@ -81,13 +80,13 @@ function AppRouter() {
           <Link to="/customer-form" style={{ marginRight: "10px" }}>
             Go to Form
           </Link>
-          <Link to="/customer-info/123">Go to Info</Link>
+          <Link to="/customer-info">Go to Info</Link>
         </nav>
 
         {/* Routes */}
         <Routes>
           <Route path="/customer-form" element={<Form />} />
-          <Route path="/customer-info/:id" element={<Info />} />
+          <Route path="/customer-info" element={<Info />} />
         </Routes>
       </div>
     </Router>
