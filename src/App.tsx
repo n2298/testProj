@@ -17,6 +17,26 @@ function Info() {
 
 function AppRouter() {
 
+  // replace Link to with useNavigate() for validation
+  const navigate = useNavigate();
+
+  // init form state
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    dateOfBirth: null,
+  });
+
+  // error state
+  const [errors, setErrors] = useState({
+    firstName: false,
+    lastName: false,
+    address1: false,
+    dateOfBirth: false,
+  });
+
   const [dateOfBirth, setDateOfBirth] = useState(null); //state init. DoB
 
   return (
