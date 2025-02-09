@@ -70,11 +70,11 @@ function AppRouter() {
           />
         </div>
 
-        <a href="/customer-info">
+        <Link to="/customer-info">
           <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
             Submit
           </Button>
-        </a>
+        </Link>
         
         <nav style={{ marginTop: "20px" }}>
           <Link to="/customer-form" style={{ marginRight: "10px" }}>
