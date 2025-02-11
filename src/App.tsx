@@ -1,5 +1,5 @@
 import { TextField, Button } from "@mui/material";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import Dropdown from "./Dropdown.tsx";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -37,21 +37,67 @@ function AppRouter() {
     dateOfBirth: false,
   });
 
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [id]: value.trim() === "", // If empty, keep error; else, clear it
+    }));
+  };
+
+    
+
+  const handleDateChange = (newValue) => {
+    setFormData({ ...formData, dateOfBirth: newValue });
+    setErrors({ ...errors, dateOfBirth: newValue === null});
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      firstName: formData.firstName.trim() === "",
+      lastName: formData.lastName.trim() === "",
+      address1: formData.address1.trim() === "",
+      dateOfBirth: formData.dateOfBirth === null,
+    };
+
+    setErrors(newErrors);
+
+    return !Object.values(newErrors).includes(true);
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      navigate("/customer-info");
+    }
+  };
+
   const [dateOfBirth, setDateOfBirth] = useState(null); //state init. DoB
 
   return (
-    <Router>
+    // <Router>
       <div style={{ padding: "20px" }}>
         <TextField
-          id="first-name"
+          id="firstName"
           label="First Name"
           variant="outlined"
+          value={formData.firstName}
+          onChange={handleInputChange}
+          error={errors.firstName}
+          helperText={errors.firstName ? "First Name is required" : ""}
           style={{ marginBottom: "10px", marginRight: "10px" }}
         />
         <TextField
-          id="last-name"
+          id="lastName"
           label="Last Name"
           variant="outlined"
+          value={formData.lastName}
+          onChange={handleInputChange}
+          error={errors.lastName}
+          helperText={errors.lastName ? "Last Name is required" : ""}
           style={{ marginBottom: "10px" }}
         />
         <br />
@@ -61,12 +107,15 @@ function AppRouter() {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Date of Birth"
-              value={dateOfBirth}
-              onChange={(newValue) => setDateOfBirth(newValue)}
+              value={formData.dateOfBirth}
+              onChange={handleDateChange}
+              // onChange={(newValue) => setDateOfBirth(newValue)}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   variant="outlined"
+                  error={errors.dateOfBirth}
+                  helperTExt={errors.dateOfBirth ? "Date of Birth is required" : ""}
                   style={{ flex: 1 }}
                 />
               )}
@@ -76,25 +125,41 @@ function AppRouter() {
 
         <div style={{ marginBottom: "10px" }}>
           <TextField
-            id="address-line-1"
+            id="address1"
             label="Address Line 1"
             variant="outlined"
             fullWidth
+            value={formData.address1}
+            onChange={handleInputChange}
+            error={errors.address1}
+            helperText={errors.address1 ? "Address Line 1 is required" : ""}
             style={{ marginBottom: "10px" }}
           />
           <TextField
-            id="address-line-2"
+            id="address2"
             label="Address Line 2"
             variant="outlined"
             fullWidth
+            value={formData.address2}
+            onChange={handleInputChange}
           />
         </div>
 
-        <Link to="/customer-info">
+        {/* <Link to="/customer-info">
           <Button variant="contained" color="primary" style={{ marginTop: "10px" }}>
             Submit
           </Button>
-        </Link>
+        </Link> */}
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          style={{marginTop: "10px"}}
+        >
+          Submit
+        </Button>
+
         
         <nav style={{ marginTop: "20px" }}>
           <Link to="/customer-form" style={{ marginRight: "10px" }}>
@@ -109,11 +174,21 @@ function AppRouter() {
           <Route path="/customer-info" element={<Info />} />
         </Routes>
       </div>
-    </Router>
+    // </Router>
   );
 }
 
-export default AppRouter;
+// export default AppRouter;
+
+export default function App(){
+  return (
+    <Router>
+      <Routes>
+        <Route path="/*" element={<AppRouter />} />
+      </Routes>
+    </Router>
+  )
+}
 
 // todo
 //  refactor form submission
